@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+import json
 import sys,getopt,datetime,codecs
 if sys.version_info[0] < 3:
     import got
@@ -52,8 +53,8 @@ def main(argv):
 			elif opt == '--toptweets':
 				tweetCriteria.topTweets = True
 
-			elif opt == '--maxtweets':
-				tweetCriteria.maxTweets = int(arg)
+			#elif opt == '--maxtweets':
+			#	tweetCriteria.maxTweets = int(arg)
 			
 			elif opt == '--near':
 				tweetCriteria.near = '"' + arg + '"'
@@ -102,7 +103,7 @@ def main(argv):
 		outputFile.close()
 		print('Done. Output file generated "%s".' % outputFileName)
 
-	storageFile = open('storeData.json','wa')
+	storageFile = open('storeData.json','a')
 
 	global psTweets
 	global ngTweets
@@ -110,16 +111,20 @@ def main(argv):
 	psTweets = psTweets/float(numTweets)
 	ngTweets = ngTweets/float(numTweets)
 	ntTweets = ntTweets/float(numTweets)
-	
-	print('Number of total tweets: {}'.format(numTweets))
-	print('Number of positive tweets: {}'.format(psTweets))
-	print('Number of negative tweets: {}'.format(ngTweets))
-	print('Number of neutral tweets: {}'.format(ntTweets))
+	ratio = psTweets/ngTweets
+	#json.dump(sentimentObj, storageFile)
+	#storageFile.write(psTweets)
+	#storageFile.write(ngTweets)
+	#storageFile.write(ntTweets)
+	print('Ratio of tweets: {}'.format(ratio))
+	#print('Number of positive tweets: {}'.format(psTweets))
+	#print('Number of negative tweets: {}'.format(ngTweets))
+	#Gprint('Number of neutral tweets: {}'.format(ntTweets))
 
-	storageFile.write('Number of total tweets: {}\n'.format(numTweets))
-	storageFile.write('Number of positive tweets: {}\n'.format(psTweets))
-	storageFile.write('Number of negative tweets: {}\n'.format(ngTweets))
-	storageFile.write('Number of neutral tweets: {}\n'.format(ntTweets))
+	#storageFile.write('\n')
+	storageFile.write('{}\n'.format(ratio))
+	#storageFile.write(':{}\n'.format(ngTweets))
+	#storageFile.write('{}\n'.format(ntTweets))
 	storageFile.close()
 		
 if __name__ == '__main__':

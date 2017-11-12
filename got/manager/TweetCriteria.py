@@ -1,7 +1,7 @@
 class TweetCriteria:
 	
 	def __init__(self):
-		self.maxTweets = 0
+		self.maxTweets = 100
 		self.within = "15mi"
 		
 	def setUsername(self, username):
